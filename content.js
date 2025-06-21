@@ -89,11 +89,45 @@ const proxyImg = new Image();
     }}}
 // Receive trigger from popup
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.action === "applyFilter") {
-    chrome.storage.local.get("undertone", (res) => {
-      if (res.undertone) {
-        processImages(res.undertone);
+   if (msg.action === "applyFilter" || msg.action === "startFiltering") {Add commentMore actions
+    chrome.storage.local.get("undertone", (data) => {
+      if (data.undertone) {
+        processImages(data.undertone);
+        if (!observerInitialized) setupMutationObserver(data.undertone);
       }
     });
   }
 });
+
+
+let observerInitialized = false;
+// Only proceed if background confirms filtering is enabled
+chrome.runtime.sendMessage({ action: "isFilteringEnabled" }, (res) => {
+  if (res.enabled) {
+    chrome.storage.local.get("undertone", (data) => {
+      if (data.undertone) {
+        processImages(data.undertone);
+        setupMutationObserver(data.undertone);
+      }
+    });
+  }
+});
+
+function setupMutationObserver(undertone) {Add commentMore actions
+  if (observerInitialized) return;
+  observerInitialized = true;
+
+  const observer = new MutationObserver((mutations) => {
+    for (const mutation of mutations) {
+      if (mutation.addedNodes.length > 0) {
+        processImages(undertone);
+        break;
+      }
+    }
+  });
+
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}

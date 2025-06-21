@@ -1,4 +1,4 @@
-document.getElementById("analyzeBtn").addEventListener("click", () => {More actions
+document.getElementById("analyzeBtn").addEventListener("click", () => {
   const file = document.getElementById("imageInput").files[0];
   if (!file) return;
 
@@ -22,7 +22,6 @@ document.getElementById("analyzeBtn").addEventListener("click", () => {More acti
       b += data[i + 2];
       count++;
     }
-More actions
     r = Math.floor(r / count);
     g = Math.floor(g / count);
     b = Math.floor(b / count);
@@ -30,7 +29,7 @@ More actions
     const undertone = getUndertone(r, g, b);
 
     // Store in chrome.storage
-    chrome.storage.local.set({ undertone }, () => {Add commentMore actions
+    chrome.storage.local.set({ undertone }, () => {
       document.getElementById("result").innerText = `Detected undertone: ${undertone}`;
 
       // Send message to content script
