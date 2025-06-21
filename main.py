@@ -1,4 +1,4 @@
-from fastapi import FastAPI, QueryAdd commentMore actions
+from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import requests

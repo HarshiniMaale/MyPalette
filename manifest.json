@@ -1,6 +1,6 @@
 {
    "manifest_version": 3,
-   "name": "MyPalette", 
+   "name": "SkinTone Styler", 
    "version": "1.0",
    "description": "Filter clothes based on skin tone using color theory.",
    "permissions": ["activeTab", "scripting", "storage"],
@@ -14,7 +14,8 @@
      "service_worker": "background.js"
    },
    "content_scripts": [
-     {"matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
+     {
+       "matches": ["*://*.hm.com/*","*://www2.hm.com/*", "*://www.forever21.com/*"], 
        "js": ["content.js"]
      }
    ],

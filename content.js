@@ -22,17 +22,30 @@ function hexToRgb(hex) {
 function colorDistance(c1, c2) {
   return Math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2 + (c1[2] - c2[2]) ** 2);
 }
+
+
+
 function isMatch(dominant, palette) {
   return palette.some(hex => colorDistance(dominant, hexToRgb(hex)) < 100);
 }
 
 function getDominantColorFromCanvas(img) {
   const canvas = document.createElement('canvas');
-canvas.width = img.naturalWidth || img.width;
+  canvas.width = img.naturalWidth || img.width;
   canvas.height = img.naturalHeight || img.height;
   const ctx = canvas.getContext('2d');
 
   try {
+    ctx.drawImage(img, 0, 0);
+    const data = ctx.getImageData(10, 10, 50, 50).data;
+    let r = 0, g = 0, b = 0, count = 0;
+
+    for (let i = 0; i < data.length; i += 4) {
+      r += data[i];
+      g += data[i + 1];
+      b += data[i + 2];
+      count++;
+    }
 
     return [Math.floor(r / count), Math.floor(g / count), Math.floor(b / count)];
   } catch (err) {
@@ -51,6 +64,7 @@ async function fetchImageAsBase64(url) {
     return null;
   }
 }
+
 async function processImages(undertone) {
   const matches = palette[undertone];
   if (!matches) return;
@@ -58,17 +72,18 @@ async function processImages(undertone) {
   const images = Array.from(document.querySelectorAll("img"));
   console.log("Processing", images.length, "images for undertone:", undertone);
 
-for (const img of images) {
+  for (const img of images) {
     const imageUrl = img.src;
      // ⛔ Skip data URLs (like tracking pixels)
     if (imageUrl.startsWith("data:")) {
       console.log("Skipping data URL image:", imageUrl);
       continue;
     }
-    
+
     const base64 = await fetchImageAsBase64(imageUrl);
     if (!base64) continue;
-const proxyImg = new Image();
+
+    const proxyImg = new Image();
     proxyImg.src = `data:image/jpeg;base64,${base64}`;
 
     await new Promise(resolve => {
@@ -81,14 +96,21 @@ const proxyImg = new Image();
 
     if (isMatch(dominant, matches)) {
       img.style.border = "3px solid limegreen";
-       img.style.boxSizing = "border-box";
+      img.style.boxSizing = "border-box";
       img.style.zIndex = "9999";
       img.style.position = "relative";
     } else {
-    }}}
+      img.style.filter = "sepia(1) saturate(500%) hue-rotate(-10deg) brightness(110%) opacity(60%)";
+    }
+  }
+}
+
+
 // Receive trigger from popup
+
+// 2. Listen for popup trigger separately
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-   if (msg.action === "applyFilter" || msg.action === "startFiltering") {
+  if (msg.action === "applyFilter" || msg.action === "startFiltering") {
     chrome.storage.local.get("undertone", (data) => {
       if (data.undertone) {
         processImages(data.undertone);
@@ -111,6 +133,7 @@ chrome.runtime.sendMessage({ action: "isFilteringEnabled" }, (res) => {
     });
   }
 });
+
 
 function setupMutationObserver(undertone) {
   if (observerInitialized) return;
