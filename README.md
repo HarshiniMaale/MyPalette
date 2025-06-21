@@ -1,88 +1,100 @@
-# MyPalette
+# 🧠 SkinTone Styler — AI-Powered Fashion Match Extension
 
-📌 Problem Statement
-Online shoppers often face the "expectation vs. reality" dilemma when outfits that look great on websites don’t suit their actual skin tone. The lack of personalized, skin-tone-aware filtering on fashion platforms leads to poor decision-making, dissatisfaction, and high return rates.
+## **📌 Problem Statement**
 
-💡 Proposed Solution
-SkinTone Styler is a browser extension that uses AI-driven image analysis to detect the user's skin tone and filters clothing items that best complement it. By integrating seamlessly with fashion websites, it enhances personalization, simplifies choices, and improves overall shopping satisfaction.
+Online shoppers often face an *"expectation vs. reality"* problem when outfits that look great online don’t complement their actual skin tone. This lack of personalized, skin-tone-aware filtering on fashion websites leads to poor decisions, dissatisfaction, and increased return rates.
 
-🔄 Workflow
-User Input
-Upload a selfie, use webcam, or enter tone description.
+---
 
-Skin Tone Detection
-AI analyzes the image to determine the user’s undertone (cool, warm, or neutral).
+## **💡 Proposed Solution**
 
-Clothing Analysis
-Images of clothing on the website are fetched and scanned using computer vision techniques to detect their dominant undertone.
+**SkinTone Styler** is a browser extension that uses AI-powered image analysis to detect a user's skin tone and filter clothing items that best complement it. By integrating directly with fashion websites, the extension delivers personalized recommendations, simplifies the shopping process, and improves customer satisfaction.
 
-Real-time Filtering
+---
 
-Matches are highlighted in green
+## **🔄 Workflow**
 
-Non-matching clothes are dimmed (grayscale)
+1. **User Input**  
+   The user uploads a selfie, uses their webcam, or enters a tone description.
 
-Works continuously as user browses new pages.
+2. **Skin Tone Detection**  
+   The extension analyzes the image to determine the user's undertone (cool, warm, or neutral).
 
-🧰 Tech Stack
-🖥️ Frontend
-JavaScript, HTML, CSS
+3. **Clothing Analysis**  
+   All product images on the website are fetched and scanned to detect the undertone of each clothing item.
 
-Canvas API (for image processing)
+4. **Real-Time Filtering**  
+   - Matching products are **highlighted in green**  
+   - Non-matching items are **dimmed to greyscale**  
+   - Filtering continues as users navigate across pages dynamically.
 
-Chrome Extension APIs
+---
 
-⚙️ Backend
-Python with FastAPI (Proxy Server)
+## **🧰 Tech Stack**
 
-OpenCV (Color analysis and image processing)
+### **Frontend**
+- JavaScript, HTML, CSS  
+- Canvas API  
+- Chrome Extension APIs  
 
-🧪 Tools
-Chrome Developer Tools
+### **Backend**
+- Python with **FastAPI**  
+- OpenCV for image processing and color detection
 
-Git & GitHub (Version Control)
+### **Tools**
+- Chrome Developer Tools  
+- Git & GitHub for version control
 
-🚀 Deployment
-Local Uvicorn server for running FastAPI backend
+### **Deployment**
+- Local server using **Uvicorn** to run the FastAPI backend
 
-🌟 Key Features
-Multiple Input Options — Upload image, use webcam, or provide tone description
+---
 
-Real-Time Suggestions — Instant analysis and filtering while browsing
+## **🌟 Key Features**
 
-High Accuracy — Multi-layered filtering for precise undertone matching
+- **Multiple Input Options** — Supports image upload, webcam, or manual tone input  
+- **Real-Time Analysis & Suggestions** — Offers instant recommendations while browsing  
+- **High Accuracy** — Applies multiple layers of filtering for precise matches  
+- **Seamless Page Navigation** — Filtering continues smoothly across dynamic page loads  
+- **User-Controlled Trigger** — Filtering activates only after a fresh image is uploaded (no auto-runs)  
+- **Intelligent Camera Guidance** — Provides real-time alerts if the user is too close, too far, or in poor lighting  
+- **UI/UX Enhancements** — Includes dark/light mode toggle and positive real-time feedback for inclusivity
 
-Seamless Page Navigation — Filtering continues across pagination and dynamic content
+---
 
-User-Controlled Trigger — Starts only after a fresh upload (no carryover from past sessions)
+## **📈 Impact**
 
-Intelligent Camera Guidance — Alerts if you're too close, too far, or lighting is suboptimal
+- ✅ **Simplifies Color-Matching** — Assists 80% of style-inexperienced users in making better outfit choices  
+- ✅ **Boosts Confidence** — Increases user satisfaction by 40% and reduces decision fatigue for 70% of shoppers  
+- ✅ **Reduces Return Rates** — Lowers color-based returns by 15–25% due to better initial choices  
+- ✅ **Supports Diverse Skin Tones** — Covers over 100+ tone variations across all skin types  
+- ✅ **Easy E-Commerce Integration** — Plug-and-play setup in under 5 minutes, scalable to 1000+ websites
 
-UI/UX Enhancements — Toggle light/dark mode, receive real-time positive feedback for inclusivity
+---
 
-📈 Impact
-✅ Simplifies Color-Matching
-Assists 80% of style-inexperienced users in choosing better outfits
+## **🧪 Future Scope**
 
-✅ Boosts Confidence in Fashion Choices
-Increases satisfaction by 40%, reduces choice overload for 70% of users
+- **Personalized Stock Alerts** — Notify users via SMS or email when new items matching their undertone are added  
+- **Multi-User Analysis** — Enable group styling suggestions for friends and families  
+- **Brand API Integration** — Collaborate with brands to pre-classify clothing by undertone for faster filtering
 
-✅ Lowers Return Rates
-Cuts color-based product returns by 15–25%
+---
 
-✅ Supports Diverse Skin Tones
-Covers 100+ tone variations across global skin types
+## **📸 Demo & Screenshots**
 
-✅ E-Commerce Ready
-Plug-and-play integration in <5 minutes for over 1,000+ websites
+> _Add screenshots or GIFs here showcasing image upload, product filtering, and UI interaction._
 
-📸 Demo & Screenshots
-(Add screenshots or GIFs here showcasing image upload, product filtering, and UI in action)
+---
 
-🧪 Future Scope
-Personalized Stock Alerts — Notify users via SMS or email when new clothing items matching their undertone are added
+## **📜 License**
 
-Multi-Person Analysis — Group styling suggestions for shared shopping (friends, families)
+MIT License
 
-Brand Collaboration APIs — Direct partnerships with brands to pre-classify clothing by undertone
+---
+
+## **🤝 Contributions**
+
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
+
+
 
