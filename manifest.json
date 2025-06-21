@@ -1,6 +1,6 @@
 {
    "manifest_version": 3,
-   "name": "SkinTone Styler",
+   "name": "SkinTone Styler", 
    "version": "1.0",
    "description": "Filter clothes based on skin tone using color theory.",
    "permissions": ["activeTab", "scripting", "storage"],
@@ -15,15 +15,19 @@
    },
    "content_scripts": [
      {
-       "matches": ["*://*.myntra.com/*", "*://*.savana.com/*"],
-       "js": ["color-thief.min.js", "content.js"]
+         "matches": ["*://*.hm.com/*","*://www2.hm.com/*"], Add commentMore actions
+       "js": ["content.js"]
      }
    ],
    "icons": {
      "48": "icons/icon.png"
-   },
-   "content_security_policy": {
-  "extension_pages": "script-src 'self'; object-src 'self'"
    }
  }
- 
+ "matches": ["*://*.hm.com/*","*://www2.hm.com/*"], Add commentMore actions
+       "js": ["content.js"]
+     }
+   ],
+   "icons": {
+     "48": "icons/icon.png"
+   }
+ } 
