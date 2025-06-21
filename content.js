@@ -22,7 +22,6 @@ function hexToRgb(hex) {
 function colorDistance(c1, c2) {
   return Math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2 + (c1[2] - c2[2]) ** 2);
 }
-More actions
 function isMatch(dominant, palette) {
   return palette.some(hex => colorDistance(dominant, hexToRgb(hex)) < 100);
 }
@@ -51,7 +50,7 @@ async function fetchImageAsBase64(url) {
     console.warn("Failed to fetch image via proxy:", url, error);
     return null;
   }
-}Add commentMore actions
+}
 async function processImages(undertone) {
   const matches = palette[undertone];
   if (!matches) return;
@@ -89,7 +88,7 @@ const proxyImg = new Image();
     }}}
 // Receive trigger from popup
 chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-   if (msg.action === "applyFilter" || msg.action === "startFiltering") {Add commentMore actions
+   if (msg.action === "applyFilter" || msg.action === "startFiltering") {
     chrome.storage.local.get("undertone", (data) => {
       if (data.undertone) {
         processImages(data.undertone);
@@ -113,7 +112,7 @@ chrome.runtime.sendMessage({ action: "isFilteringEnabled" }, (res) => {
   }
 });
 
-function setupMutationObserver(undertone) {Add commentMore actions
+function setupMutationObserver(undertone) {
   if (observerInitialized) return;
   observerInitialized = true;
 
