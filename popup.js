@@ -1,60 +1,48 @@
-function colorDistance(c1, c2) {
-  return Math.sqrt((c1[0] - c2[0]) ** 2 + (c1[1] - c2[1]) ** 2 + (c1[2] - c2[2]) ** 2);
-}
+document.getElementById("analyzeBtn").addEventListener("click", () => {More actions
+  const file = document.getElementById("imageInput").files[0];
+  if (!file) return;
 
-function getDominantColor(img) {
-  const canvas = document.createElement('canvas');
-  canvas.width = img.naturalWidth;
-  canvas.height = img.naturalHeight;
-  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  img.src = URL.createObjectURL(file);
 
-  try {
+  img.onload = () => {
+    const canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    const ctx = canvas.getContext("2d");
     ctx.drawImage(img, 0, 0);
-    const data = ctx.getImageData(10, 10, 50, 50).data;
-    let r = 0, g = 0, b = 0, count = 0;
 
+    const imageData = ctx.getImageData(50, 50, 100, 100);
+    const data = imageData.data;
+
+    let r = 0, g = 0, b = 0, count = 0;
     for (let i = 0; i < data.length; i += 4) {
       r += data[i];
       g += data[i + 1];
       b += data[i + 2];
       count++;
     }
+More actions
+    r = Math.floor(r / count);
+    g = Math.floor(g / count);
+    b = Math.floor(b / count);
 
-    return [Math.floor(r / count), Math.floor(g / count), Math.floor(b / count)];
-  } catch (err) {
-    console.warn("Skipped image due to CORS:", img.src);
-    return null;
-  }
-}
+    const undertone = getUndertone(r, g, b);
 
-function isMatch(dominant, palette) {
-  return palette.some(hex => colorDistance(dominant, hexToRgb(hex)) < 100);
-}
+    // Store in chrome.storage
+    chrome.storage.local.set({ undertone }, () => {Add commentMore actions
+      document.getElementById("result").innerText = `Detected undertone: ${undertone}`;
 
-function processImages(undertone) {
-    const matches = palette[undertone];Add commentMore actions
-   if (!matches) return;
-   const images = Array.from(document.querySelectorAll("img"));Add commentMore actions
-  console.log("Processing", images.length, "images for undertone:", undertone);
-   images.forEach(img => {Add commentMore actions
-    if (!img.complete || img.naturalWidth === 0) return;
-
-    const dominant = getDominantColor(img);
-    if (!dominant) return;
-
-    if (isMatch(dominant, matches)) {
-      img.style.border = "3px solid limegreen";
-    } else {
-      img.style.filter = "grayscale(100%) opacity(40%)";
-    }
-  });
-}
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {Add commentMore actions
-  if (msg.action === "applyFilter") {
-    chrome.storage.local.get("undertone", (res) => {
-      if (res.undertone) {
-        processImages(res.undertone);
-      }
+      // Send message to content script
+      chrome.tabs.query({ active: true, currentWindow: true }, tabs => {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "applyFilter" });
+      });
     });
-  }
+  };
 });
+
+function getUndertone(r, g, b) {
+  if (r > b && g > b) return "warm";
+  if (b > r && b > g) return "cool";
+  return "neutral";
+}
