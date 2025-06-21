@@ -14,8 +14,7 @@
      "service_worker": "background.js"
    },
    "content_scripts": [
-     {
-         "matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
+     {"matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
        "js": ["content.js"]
      }
    ],
@@ -23,11 +22,3 @@
      "48": "icons/icon.png"
    }
  }
- "matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
-       "js": ["content.js"]
-     }
-   ],
-   "icons": {
-     "48": "icons/icon.png"
-   }
- } 
