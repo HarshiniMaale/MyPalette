@@ -1,6 +1,6 @@
 {
    "manifest_version": 3,
-   "name": "SkinTone Styler", 
+   "name": "MyPalette", 
    "version": "1.0",
    "description": "Filter clothes based on skin tone using color theory.",
    "permissions": ["activeTab", "scripting", "storage"],
