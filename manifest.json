@@ -15,7 +15,7 @@
    },
    "content_scripts": [
      {
-         "matches": ["*://*.hm.com/*","*://www2.hm.com/*"], Add commentMore actions
+         "matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
        "js": ["content.js"]
      }
    ],
@@ -23,7 +23,7 @@
      "48": "icons/icon.png"
    }
  }
- "matches": ["*://*.hm.com/*","*://www2.hm.com/*"], Add commentMore actions
+ "matches": ["*://*.hm.com/*","*://www2.hm.com/*"],
        "js": ["content.js"]
      }
    ],
