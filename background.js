@@ -1,39 +1,47 @@
+// background.js
+
+// Run when the extension is installed
 chrome.runtime.onInstalled.addListener(() => {
-   console.log("SkinTone Styler Extension Installed");
- });
- 
- // Listen for messages from popup.js or content.js
- chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-   if (message.type === "analyzeSkinTone") {
-     // You can process or forward the data here
-     console.log("Received skin tone data:", message.data);
- 
-     // Optionally inject scripts into the current page
-     chrome.scripting.executeScript({
-       target: { tabId: sender.tab.id },
-       files: ["content.js"]
-     });
- 
-     // Respond back if needed
-     sendResponse({ status: "success", message: "Skin tone data received." });
-   }
- 
-   return true; // Required if using async sendResponse
- });
+  console.log("SkinTone Styler Extension Installed");
+});
 
+// Keep track of filtering state
+let filterEnabled = false;
 
+// Unified message listener
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  // Handle skin tone analysis request
+  if (message.type === "analyzeSkinTone") {
+    console.log("Received skin tone data:", message.data);
 
+    // Safely check that sender.tab is available
+    if (sender.tab && sender.tab.id) {
+      chrome.scripting.executeScript({
+        target: { tabId: sender.tab.id },
+        files: ["content.js"]
+      });
+    } else {
+      console.warn("No sender.tab information found.");
+    }
 
- 
- let filterEnabled = false;
+    sendResponse({ status: "success", message: "Skin tone data received." });
+    return true; // Keeps the message channel open for async response
+  }
 
-chrome.runtime.onMessage.addListener((msg, sender, sendResponse) => {
-  if (msg.action === "enableFiltering") {
+  // Enable filtering mode
+  if (message.action === "enableFiltering") {
     filterEnabled = true;
     chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-      chrome.tabs.sendMessage(tabs[0].id, { action: "startFiltering" });
+      if (tabs[0]) {
+        chrome.tabs.sendMessage(tabs[0].id, { action: "startFiltering" });
+      }
     });
-  } else if (msg.action === "isFilteringEnabled") {
+  }
+
+  // Check if filtering is enabled
+  else if (message.action === "isFilteringEnabled") {
     sendResponse({ enabled: filterEnabled });
   }
+
+  return true; // Ensures sendResponse works asynchronously
 });
